@@ -2,10 +2,12 @@ package edu.touro.las.mcon364.func_prog.exercises;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
+
 
 /**
  * Functional Interface Practice
@@ -40,7 +42,9 @@ public class FunctionalInterfaceExercises {
      */
     public static Supplier<Integer> currentYearSupplier() {
       // TODO
-        return null;
+        var date =  LocalDate.now();
+        int year = date.getYear();
+        return () -> year;
     }
 
     /**
@@ -49,7 +53,7 @@ public class FunctionalInterfaceExercises {
      */
     public static Supplier<Integer> randomScoreSupplier() {
         // TODO
-        return null;
+        return () -> ThreadLocalRandom.current().nextInt(1, 7);
     }
 
     // =========================================================
@@ -62,7 +66,7 @@ public class FunctionalInterfaceExercises {
      */
     public static Predicate<String> isAllUpperCase() {
         // TODO
-        return null;
+        return (s) -> s.toUpperCase().equals(s);
     }
 
     /**
@@ -73,7 +77,9 @@ public class FunctionalInterfaceExercises {
      */
     public static Predicate<Integer> positiveAndDivisibleByFive() {
         // TODO
-        return null;
+        Predicate<Integer> isPositive = i -> i > 0;
+        Predicate<Integer> isDivisibleByFive = i -> i % 5 == 0;
+        return isPositive.and(isDivisibleByFive);
     }
 
     // =========================================================
@@ -88,7 +94,7 @@ public class FunctionalInterfaceExercises {
      */
     public static Function<Double, Double> celsiusToFahrenheit() {
         // TODO
-        return null;
+        return  f -> f * 1.8 + 32;
     }
 
     /**
@@ -99,7 +105,15 @@ public class FunctionalInterfaceExercises {
      */
     public static Function<String, Integer> countVowels() {
         // TODO
-        return null;
+        return (string) -> {
+            int count = 0;
+            for (int i = 0; i < string.length(); i++) {
+                if (string.substring(i, i + 1).matches(".*[AEUOIaeuoi].*")) {
+                    count++;
+                }
+            }
+            return count;
+        };
     }
 
     // =========================================================
@@ -115,7 +129,7 @@ public class FunctionalInterfaceExercises {
      */
     public static Consumer<String> starPrinter() {
         // TODO
-        return null;
+        return string -> System.out.println("*** " + string + " ***");
     }
 
     /**
@@ -124,7 +138,7 @@ public class FunctionalInterfaceExercises {
      */
     public static Consumer<Integer> printSquare() {
         // TODO
-        return null;
+        return integer ->System.out.println((int)Math.pow(integer, 2));
     }
 
     // =========================================================
@@ -143,7 +157,18 @@ public class FunctionalInterfaceExercises {
      *  - Print them
      */
     public static void processStrings(List<String> values) {
-        // TODO
+        for(int i = 0; i < values.size(); i++) {
+            if(values.get(i).length()>3){
+                values.set(i, values.get(i).toLowerCase());
+                System.out.println(values.get(i));
+            }
+            /*else{
+
+                values.remove(i);
+                i--;
+
+             */
+        }
     }
 
     /**
@@ -157,5 +182,14 @@ public class FunctionalInterfaceExercises {
      */
     public static void generateAndFilterScores() {
         // TODO
+         int x = 5;
+         int currNum;
+            while(x>0){
+                currNum = (int)(Math.random()*101);
+                if (currNum>70){
+                    System.out.println(currNum);
+                }
+                x--;
+        }
     }
 }
