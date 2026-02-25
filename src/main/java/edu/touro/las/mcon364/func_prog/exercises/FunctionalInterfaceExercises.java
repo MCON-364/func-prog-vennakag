@@ -158,7 +158,7 @@ public class FunctionalInterfaceExercises {
      */
     public static void processStrings(List<String> values) {
         for(int i = 0; i < values.size(); i++) {
-            if(values.get(i).length()>2){
+            if(values.get(i).length()>3){
                 values.set(i, values.get(i).toLowerCase());
                 System.out.println(values.get(i));
             }
