@@ -1,7 +1,10 @@
 package edu.touro.las.mcon364.func_prog.homework;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.*;
 
 /**
@@ -45,6 +48,12 @@ public class SmartDataEngine {
             Consumer<R> consumer
     ) {
         // TODO
+        for(T item : input) {
+            if(filter.test(item)){
+                consumer.accept(mapper.apply(item));
+            }
+        }
+
     }
 
     // ============================================================
@@ -60,7 +69,8 @@ public class SmartDataEngine {
      */
     public static Optional<Double> safeDivide(double a, double b) {
         // TODO
-        return Optional.empty();
+        if(b == 0) return Optional.empty();
+        return Optional.of(a/b);
     }
 
     /**
@@ -79,7 +89,11 @@ public class SmartDataEngine {
      */
     public static double processDivision(double a, double b) {
         // TODO
-        return 0;
+        Optional<Double> result = safeDivide(a, b);
+        if(result.isPresent()){
+            return result.get()*10;
+        }
+        return -1.0;
     }
 
     // ============================================================
@@ -109,7 +123,12 @@ public class SmartDataEngine {
         //     default -> ...
         // };
 
-        return null;
+        return switch (input) {
+                case String s -> s.toUpperCase();
+                case Integer i -> (int)Math.pow(i,2);
+                case Double d -> Math.round(d);
+                default -> "Unsupported";
+            };
     }
 
     // ============================================================
@@ -147,7 +166,10 @@ public class SmartDataEngine {
 
     public static Function<String, Integer> buildStringLengthPipeline() {
         // TODO
-        return null;
+        Function<String, String> trim = String::trim;
+        Function<String, String> lower = String::toLowerCase;
+        Function<String, Integer> length = String::length;
+        return trim.andThen(lower).andThen(length);
     }
 
     // ============================================================
@@ -188,6 +210,23 @@ public class SmartDataEngine {
 
     public static void runScoreProcessor() {
         // TODO
+        List<String> scores = new ArrayList<>();
+        Supplier<Integer> randomNum = () -> ThreadLocalRandom.current().nextInt(1, 100);
+        Predicate<Integer> isOverFifty = i -> i > 50;
+        Function<Integer, String> convertToString = i -> "Score: " + i;
+        Consumer<String> consumer = s -> {
+            scores.add(s);
+            System.out.println(s);
+        };
+        int num = 10;
+        while(num > 0){
+            int getNum= randomNum.get();
+            if(isOverFifty.test(getNum)){
+                consumer.accept(convertToString.apply(getNum));
+            }
+            num--;
+        }
+
     }
 
 }

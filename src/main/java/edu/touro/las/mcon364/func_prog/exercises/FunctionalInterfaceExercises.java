@@ -8,6 +8,7 @@ import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
 
+
 /**
  * Functional Interface Practice
  *
@@ -104,7 +105,15 @@ public class FunctionalInterfaceExercises {
      */
     public static Function<String, Integer> countVowels() {
         // TODO
-        return null;
+        return (string) -> {
+            int count = 0;
+            for (int i = 0; i < string.length(); i++) {
+                if (string.substring(i, i + 1).matches(".*[AEUOIaeuoi].*")) {
+                    count++;
+                }
+            }
+            return count;
+        };
     }
 
     // =========================================================
@@ -120,7 +129,7 @@ public class FunctionalInterfaceExercises {
      */
     public static Consumer<String> starPrinter() {
         // TODO
-        return null;
+        return string -> System.out.println("*** " + string + " ***");
     }
 
     /**
@@ -129,7 +138,7 @@ public class FunctionalInterfaceExercises {
      */
     public static Consumer<Integer> printSquare() {
         // TODO
-        return null;
+        return integer ->System.out.println((int)Math.pow(integer, 2));
     }
 
     // =========================================================
@@ -148,7 +157,18 @@ public class FunctionalInterfaceExercises {
      *  - Print them
      */
     public static void processStrings(List<String> values) {
-        // TODO
+        for(int i = 0; i < values.size(); i++) {
+            if(values.get(i).length()>2){
+                values.set(i, values.get(i).toLowerCase());
+                System.out.println(values.get(i));
+            }
+            /*else{
+
+                values.remove(i);
+                i--;
+
+             */
+        }
     }
 
     /**
@@ -162,5 +182,14 @@ public class FunctionalInterfaceExercises {
      */
     public static void generateAndFilterScores() {
         // TODO
+         int x = 5;
+         int currNum;
+            while(x>0){
+                currNum = (int)(Math.random()*101);
+                if (currNum>70){
+                    System.out.println(currNum);
+                }
+                x--;
+        }
     }
 }
